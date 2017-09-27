@@ -5,6 +5,9 @@ peer_dbs module
 
 # DBS layer
 
+# We try to avoding the burst mode using lists of destination peers
+# (indexed by source peers) that are used concurrently.
+
 import time
 from threading import Thread
 from .common import Common
