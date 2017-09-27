@@ -3,6 +3,11 @@
 peer_dbs module
 """
 
+# DBS
+
+# Peers sorts the list of peers by RTT (periodically send and receive
+# [hello] to the rest of peers of the team to compute the RTTs).
+
 import time
 from threading import Thread
 from .common import Common
