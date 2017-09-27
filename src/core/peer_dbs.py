@@ -14,7 +14,6 @@ from .simulator_stuff import Socket_print as socket
 class Peer_DBS(sim):
 
     MAX_CHUNK_DEBT = 128
-    #NEIGHBORHOOD_DEGREE = 5
     
     def __init__(self, id):
         self.id = id
