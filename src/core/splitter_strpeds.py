@@ -19,7 +19,7 @@ class Splitter_STRPEDS(Splitter_DBS):
         self.trusted_peers_discovered = []
         self.complaints = {}
         self.p_mpl = 1
-        self.p_tpl = 1
+        self.p_tpl = 0
 
         # --- Only for simulation purposes ---
         self.number_of_malicious = 0
