@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "Generating dat files..."
 # Get dat files from draw
-python drawtodat.py -i $1
+python3 drawtodat.py -i $1
 echo "Done"
 
 # Plot Team

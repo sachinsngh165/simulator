@@ -57,7 +57,7 @@ class Socket_print:
             print("{:.6f} {} - [{}] -> {}".format(time.time(), self.id, msg, dst))
         try:
             sendto_value = self.sock.sendto(message, socket.MSG_DONTWAIT, "/tmp/"+dst+"_udp")
-            print("SENDTO_VALUE", sendto_value)
+            #print("SENDTO_VALUE", sendto_value)
             return sendto_value
         except ConnectionRefusedError:
             print("The message", msg, "has not been delivered because the destination", dst, "left the team")
