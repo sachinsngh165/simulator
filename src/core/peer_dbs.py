@@ -208,13 +208,13 @@ class Peer_DBS(sim):
             # --- for simulation purposes only ---------------------------------------------- #
             self.sender_of_chunks[chunk_number % self.buffer_size] = sender                   #
                                                                                               #
-            chunks = ""                                                                       #
+            #chunks = ""                                                                       #
             for n, c in self.chunks:                                                          #
-                chunks += c                                                                   #
+                #chunks += c                                                                   #
                 if c == "L":                                                                  #
                     self.sender_of_chunks[n % self.buffer_size] = ""                          #
                                                                                               #
-            sim.FEEDBACK["DRAW"].put(("B", self.id, chunks,":".join(self.sender_of_chunks)))  #
+            sim.FEEDBACK["DRAW"].put(("B", self.id, ":".join(self.sender_of_chunks)))  #
             # ------------------------------------------------------------------------------- #
 
             self.received_chunks += 1

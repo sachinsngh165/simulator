@@ -209,7 +209,7 @@ class Simulator():
     def update_buffer_round(self, number_of_round):
         self.buffer_figure.suptitle("Buffer Status "+number_of_round, size=16)
 
-    def update_buffer(self, node, buffer_shot, senders_shot):
+    def update_buffer(self, node, senders_shot):
         if self.buffer_order.get(node) is None:
             self.buffer_order[node] = self.buffer_index
             self.buffer_labels[self.buffer_index] = node
@@ -217,12 +217,12 @@ class Simulator():
             self.buffer_ax.get_xticklabels()[self.buffer_index].set_color(self.buffer_colors[(self.buffer_index-1)])
             self.buffer_index += 1
 
-        buffer_out = [pos for pos, char in enumerate(buffer_shot) if char == "L"]
+        buffer_out = [pos for pos, char in enumerate(sender_shot) if char == ""]
         self.lineOUT.set_xdata([self.buffer_order[node]]*len(buffer_out))
         self.lineOUT.set_ydata(buffer_out)
         self.buffer_ax.draw_artist(self.lineOUT)
 
-        buffer_in = [pos for pos, char in enumerate(buffer_shot) if char == "C"]
+        buffer_in = [pos for pos, char in enumerate(sender_shot) if char != ""]
         sender_list = senders_shot.split(":")
         self.lineIN.set_xdata([self.buffer_order[node]]*len(buffer_in))
         for pos in buffer_in:
@@ -298,7 +298,7 @@ class Simulator():
                 self.number_of_rounds = int(m[4])
                 self.set_of_rules = m[5]
             else:
-                print("Invalid forma file", self.drawing_log)
+                print("Invalid format file", self.drawing_log)
                 exit()
 
         plt.ion()
@@ -333,7 +333,7 @@ class Simulator():
 
             if m[0] == "B":
                 # try:
-                self.update_buffer(m[1], m[2], m[3])
+                self.update_buffer(m[1], m[2])
                 buffer_shot = None
                 # except Exception as inst:
                 #    # For visualization in real time (line is not fully written)
