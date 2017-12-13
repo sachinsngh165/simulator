@@ -17,6 +17,7 @@ class Peer_Malicious(Peer_STRPEDS):
         self.persistent_attack = True
         self.attacked_count = 0
         sim.SHARED_LIST["malicious"].append(self.id)
+        random.seed(3)
         print("Peer Malicious initialized")
 
     def receive_the_list_of_peers(self):

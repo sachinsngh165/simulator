@@ -41,6 +41,7 @@ class Simulator():
         self.current_round = 0
         self.gui = gui
         self.processes = {}
+        np.random.seed(3)
 
     def get_team_size(self, n):
         return 2**(n-1).bit_length()
