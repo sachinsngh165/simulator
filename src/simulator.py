@@ -26,7 +26,7 @@ import os
 
 class Simulator():
 
-    P_IN = 0.4
+    P_IN = 0.8
     P_MoP = 0.2
     P_WIP = 0.6
     P_MP = 0.2
@@ -70,7 +70,7 @@ class Simulator():
 
     def run_a_peer(self, splitter_id, type, id, first_monitor=False):
         total_peers = self.number_of_monitors + self.number_of_peers + self.number_of_malicious
-        chunks_before_leave = np.random.weibull(2) * (total_peers*(self.number_of_rounds-self.current_round))
+        chunks_before_leave = np.random.weibull(5) * (total_peers*(self.number_of_rounds-self.current_round))
         if type == "monitor":
             if first_monitor is True:
                 chunks_before_leave = 99999999
