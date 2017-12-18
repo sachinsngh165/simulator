@@ -18,8 +18,8 @@ set style line 3 lc rgb '#0B6121' # --- green for std dev
 set style line 4 lc rgb '#CCCCCC' # --- gray for std dev
 #unset key
 
-set ytics 0.1
-set yrange[0:1]
+#set ytics 0.1
+#set yrange[0:1]
 set tics scale 1
 
 set xlabel "Number of Round"

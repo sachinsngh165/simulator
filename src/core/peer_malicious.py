@@ -12,7 +12,7 @@ class Peer_Malicious(Peer_STRPEDS):
 
     def __init__(self, id):
         super().__init__(id)
-        self.MPTR = 5
+        self.MPTR = 3
         self.chunks_sent_to_main_target = 0
         self.persistent_attack = True
         self.attacked_count = 0
@@ -31,7 +31,8 @@ class Peer_Malicious(Peer_STRPEDS):
         target = None
         malicious_list = sim.SHARED_LIST["malicious"]
         extra_attacks = len(set(self.peer_list) & set(sim.SHARED_LIST["regular"]))
-        if (self.attacked_count + extra_attacks) < (len(self.peer_list)//2 - len(malicious_list)):
+        #if (self.attacked_count + extra_attacks) < (len(self.peer_list)//2 - len(malicious_list)):
+        if (self.attacked_count + extra_attacks) < (len(self.peer_list) - len(malicious_list)):
             attacked_list = sim.SHARED_LIST["attacked"]
             availables = list(set(self.peer_list)-set(attacked_list)-set(malicious_list))
 
