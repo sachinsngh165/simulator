@@ -86,6 +86,8 @@ class Splitter_SSS(Splitter_STRPEDS):
                 sim.FEEDBACK["DRAW"].put(("T", "M", self.number_of_monitors, self.current_round))
                 sim.FEEDBACK["DRAW"].put(("T", "P", (len(self.peer_list)-self.number_of_monitors - self.number_of_malicious), self.current_round))
                 sim.FEEDBACK["DRAW"].put(("T", "MP", self.number_of_malicious, self.current_round))
+                sim.FEEDBACK["DRAW"].put(("D", "TP", (self.number_of_monitors- len(self.trusted_peers_discovered)), self.current_round))
+
                 
             try:
                 peer = self.peer_list[self.peer_number]

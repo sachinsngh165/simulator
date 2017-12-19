@@ -25,7 +25,7 @@ def main(argv):
     team_log_file = open(filename+".team", "w", 1)
     buffer_log_file = open(filename+".buffer", "w", 1)
 
-    team_log_file.write("Round\tTPs\tWIPs\tMPs")
+    team_log_file.write("Round\tTPs\tWIPs\tMPs\tUD-TPs")
     buffer_log_file.write("Round\tCLR")
 
     clr = 0
@@ -50,6 +50,9 @@ def main(argv):
             team_log_file.write(m[2] + '\t')
 
         if m[0] == "T" and m[1] == "MP":
+            team_log_file.write(m[2] + '\t')
+
+        if m[0] == "D" and m[1] == "TP":
             team_log_file.write(m[2])
 
         if m[0] == "CLR":

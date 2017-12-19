@@ -118,6 +118,30 @@ class Splitter_STRPEDS(Splitter_DBS):
                 self.punish_peer(tp, "by splitter")
                 self.trusted_peers_discovered.remove(tp)
 
+    def remove_peer(self, peer):
+        try:
+            self.peer_list.remove(peer)
+        except ValueError:
+            print(self.id, ": unexpected error, the removed peer", peer, "does not exist!")
+        else:
+            #self.peer_number -= 1
+            # --------------------
+            sim.FEEDBACK["DRAW"].put(("O", "Node", "OUT", peer))
+            if peer[0] == "M" and peer[1] != "P":
+                self.number_of_monitors -= 1
+                if peer in self.trusted_peers:
+                    self.trusted_peers.remove(peer)
+            # --------------------
+        finally:
+            pass
+
+        try:
+            del self.losses[peer]
+        except KeyError:
+            print(self.id, ": unexpected error, the removed peer", peer, "does not exist in losses")
+        finally:
+            pass
+        
     def increment_unsupportivity_of_peer(self, peer):
         try:
             if peer not in self.trusted_peers:
@@ -147,7 +171,8 @@ class Splitter_STRPEDS(Splitter_DBS):
                 if sender in self.trusted_peers:
                     if __debug__:
                         print("Complaint about bad peers from", sender, "bad list", message[2])
-                    self.trusted_peers_discovered.append(sender)
+                    if (sender not in self.trusted_peers_discovered):
+                        self.trusted_peers_discovered.append(sender)
                     self.process_bad_peers_message(message, sender)
             else:
                 self.process_goodbye(sender)
@@ -171,6 +196,7 @@ class Splitter_STRPEDS(Splitter_DBS):
                 sim.FEEDBACK["DRAW"].put(("T", "M", self.number_of_monitors, self.current_round))
                 sim.FEEDBACK["DRAW"].put(("T", "P", (len(self.peer_list)-self.number_of_monitors - self.number_of_malicious), self.current_round))
                 sim.FEEDBACK["DRAW"].put(("T", "MP", self.number_of_malicious, self.current_round))
+                sim.FEEDBACK["DRAW"].put(("D", "TP", len(set(self.trusted_peers) - set(self.trusted_peers_discovered)), self.current_round))
 
                 self.current_round += 1
 
