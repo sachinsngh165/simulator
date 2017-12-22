@@ -32,7 +32,7 @@ class Peer_Malicious(Peer_STRPEDS):
         malicious_list = sim.SHARED_LIST["malicious"]
         extra_attacks = len(set(self.peer_list) & set(sim.SHARED_LIST["regular"]))
         #if (self.attacked_count + extra_attacks) < (len(self.peer_list)//2 - len(malicious_list)):
-        if (self.attacked_count + extra_attacks) < (int(len(self.peer_list)*0.7) - len(malicious_list)):
+        if (self.attacked_count + extra_attacks) < (int(len(self.peer_list)*1) - len(malicious_list)):
             attacked_list = sim.SHARED_LIST["attacked"]
             availables = list(set(self.peer_list)-set(attacked_list)-set(malicious_list))
 

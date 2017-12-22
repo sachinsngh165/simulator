@@ -190,7 +190,7 @@ class Peer_DBS(sim):
         # ----- Check if new round for peer (simulation purposes) ------------- #
         if not self.is_a_control_message(message) and sender == self.splitter:  #
             if self.played > 0 and self.played >= len(self.peer_list):          #
-                clr = self.losses/self.played                                   #
+                clr = self.losses/(self.played + self.losses)                   #
                 sim.FEEDBACK["DRAW"].put(("CLR", self.id, clr))                 #
                 self.losses = 0                                                 #
                 self.played = 0                                                 #
