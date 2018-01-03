@@ -383,6 +383,7 @@ class Simulator():
         sim.SHARED_LIST["malicious"] = manager.list()
         sim.SHARED_LIST["regular"] = manager.list()
         sim.SHARED_LIST["attacked"] = manager.list()
+        sim.SHARED_LIST["quarantine"] = manager.dict()
 
         # Automatic bitrate control only for CIS-SSS
         sim.RECV_LIST = manager.dict()

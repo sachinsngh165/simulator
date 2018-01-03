@@ -54,13 +54,19 @@ class Peer_Malicious(Peer_STRPEDS):
         extra_attacks = len(set(self.peer_list) & set(sim.SHARED_LIST["regular"]))
         if (self.attacked_count + extra_attacks) < (int(len(self.peer_list)*1) - len(malicious_list)):
             attacked_list = sim.SHARED_LIST["attacked"]
-            availables = list(set(self.peer_list)-set(attacked_list)-set(malicious_list))
+            quarantine_list = sim.SHARED_LIST["quarantine"].keys()
+            availables = list(set(self.peer_list)-set(attacked_list)-set(malicious_list)-set(quarantine_list))
 
             if availables:
                 target = random.choice(availables)
+            else:
+                potentials_wip_list = [k for k, v in sim.SHARED_LIST["quarantine"].items() if v == min(sim.SHARED_LIST["quarantine"].values())]
+                target = random.choice(potentials_wip_list)
+
+            if target is not None:
                 sim.SHARED_LIST["attacked"].append(target)
                 if __debug__:
-                    print("Main target selected:", target)
+                    print("Main # TODO: arget selected:", target)
                 self.chunks_sent_to_main_target = 0
                 self.attacked_count += 1
 
