@@ -427,6 +427,8 @@ class Simulator():
             print(sim.SHARED_LIST["regular"])
             print("List of peer Attacked")
             print(sim.SHARED_LIST["attacked"])
+            print("List of quarantine peers")
+            print(sim.SHARED_LIST["quarantine"])
             
     def addPeer(self):
         probabilities = [Simulator.P_MoP, Simulator.P_WIP, Simulator.P_MP]

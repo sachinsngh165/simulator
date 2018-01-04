@@ -13,9 +13,11 @@ class Peer_Malicious(Peer_STRPEDS):
     def __init__(self, id):
         super().__init__(id)
         self.MPTR = 3
+        self.ATTACK_METHOD = 1
         self.chunks_sent_to_main_target = 0
         self.persistent_attack = True
         self.attacked_count = 0
+        self.recv_counter = 0
         sim.SHARED_LIST["malicious"].append(self.id)
         random.seed(3)
         print("Peer Malicious initialized")
@@ -79,6 +81,21 @@ class Peer_Malicious(Peer_STRPEDS):
 
     def get_poisoned_chunk(self, chunk):
         return (chunk[0], "B", chunk[2])
+
+    def process_message(self, message, sender):
+        if sender != self.splitter:
+            self.recv_counter += 1
+            if self.recv_counter > len(self.peer_list):  # it is out
+                for peer in sim.SHARED_LIST["regular"]:
+                    if peer in sim.SHARED_LIST["quarantine_list"]:
+                        sim.SHARED_LIST["quarantine"][peer] = sim.SHARED_LIST["quarantine"][peer] + (1//len(sim.SHARED_LIST["regular"]))
+                    else:
+                        sim.SHARED_LIST["quarantine"][peer] = 1//len(sim.SHARED_LIST["regular"])
+                sim.SHARED_LIST["regular"].clear()
+        else:
+            self.recv_counter = 0
+            
+        return Peer_STRPEDS.process_message(self, message, sender)
 
     def send_chunk(self, peer):
         poisoned_chunk = self.get_poisoned_chunk(self.receive_and_feed_previous)
