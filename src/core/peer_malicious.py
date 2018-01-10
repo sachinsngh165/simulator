@@ -30,7 +30,8 @@ class Peer_Malicious(Peer_STRPEDS):
         self.main_target = self.choose_main_target()
 
     def choose_main_target(self):
-        return self.selection_first_method()
+        #return self.selection_first_method()
+        return self.selection_second_method()
 
     def selection_first_method(self):
         target = None
@@ -85,13 +86,13 @@ class Peer_Malicious(Peer_STRPEDS):
     def process_message(self, message, sender):
         if sender != self.splitter:
             self.recv_counter += 1
-            if self.recv_counter > len(self.peer_list):  # it is out
+            if self.recv_counter > (len(self.peer_list)-self.attacked_count):  # it is out
                 for peer in sim.SHARED_LIST["regular"]:
-                    if peer in sim.SHARED_LIST["quarantine_list"]:
+                    if peer in sim.SHARED_LIST["quarantine"]:
                         sim.SHARED_LIST["quarantine"][peer] = sim.SHARED_LIST["quarantine"][peer] + (1//len(sim.SHARED_LIST["regular"]))
                     else:
                         sim.SHARED_LIST["quarantine"][peer] = 1//len(sim.SHARED_LIST["regular"])
-                sim.SHARED_LIST["regular"].clear()
+                sim.SHARED_LIST["regular"][:] = []
         else:
             self.recv_counter = 0
             
