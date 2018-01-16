@@ -89,9 +89,10 @@ class Peer_Malicious(Peer_STRPEDS):
             if self.recv_counter > (len(self.peer_list)-self.attacked_count):  # it is out
                 for peer in sim.SHARED_LIST["regular"]:
                     if peer in sim.SHARED_LIST["quarantine"]:
-                        sim.SHARED_LIST["quarantine"][peer] = sim.SHARED_LIST["quarantine"][peer] + (1//len(sim.SHARED_LIST["regular"]))
+                        sim.SHARED_LIST["quarantine"][peer] = sim.SHARED_LIST["quarantine"][peer] + (1/len(sim.SHARED_LIST["regular"]))
                     else:
-                        sim.SHARED_LIST["quarantine"][peer] = 1//len(sim.SHARED_LIST["regular"])
+                        sim.SHARED_LIST["quarantine"][peer] = 1/len(sim.SHARED_LIST["regular"])
+                print(self.id, "Discover?")
                 sim.SHARED_LIST["regular"][:] = []
         else:
             self.recv_counter = 0
