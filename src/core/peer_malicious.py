@@ -91,12 +91,12 @@ class Peer_Malicious(Peer_STRPEDS):
             if self.recv_counter > (len(self.peer_list)*2) and not self.discover:  # it is out
 
                 being_testing = 1 if self.main_target is not None else 0
-                    
                 for peer in sim.SHARED_LIST["regular"]:
-                    if peer in sim.SHARED_LIST["quarantine"]:
-                        sim.SHARED_LIST["quarantine"][peer] = sim.SHARED_LIST["quarantine"][peer] + (1/(len(sim.SHARED_LIST["regular"]) + being_testing))
-                    else:
-                        sim.SHARED_LIST["quarantine"][peer] = 1/(len(sim.SHARED_LIST["regular"]) + being_testing)
+                        sim.SHARED_LIST["quarantine"][peer] = sim.SHARED_LIST["quarantine"].get(peer, 0) + (1/(len(sim.SHARED_LIST["regular"]) + being_testing))
+
+                if self.main_target is not None:
+                    sim.SHARED_LIST["quarantine"][self.main_target] = sim.SHARED_LIST["quarantine"].get(self.main_target, 0) + (1/(len(sim.SHARED_LIST["regular"]) + being_testing))
+
                 print(self.id, "Discover?")
                 self.discover = True
                 sim.SHARED_LIST["regular"][:] = []
