@@ -18,6 +18,7 @@ class Peer_Malicious(Peer_STRPEDS):
         self.persistent_attack = True
         self.attacked_count = 0
         self.recv_counter = 0
+        self.discover = False
         sim.SHARED_LIST["malicious"].append(self.id)
         random.seed(3)
         print("Peer Malicious initialized")
@@ -86,13 +87,18 @@ class Peer_Malicious(Peer_STRPEDS):
     def process_message(self, message, sender):
         if sender != self.splitter:
             self.recv_counter += 1
-            if self.recv_counter > (len(self.peer_list)-self.attacked_count):  # it is out
+            print(self.id, "RECV_COUNTER=",self.recv_counter)
+            if self.recv_counter > (len(self.peer_list)*2) and not self.discover:  # it is out
+
+                being_testing = 1 if self.main_target is not None else 0
+                    
                 for peer in sim.SHARED_LIST["regular"]:
                     if peer in sim.SHARED_LIST["quarantine"]:
-                        sim.SHARED_LIST["quarantine"][peer] = sim.SHARED_LIST["quarantine"][peer] + (1/len(sim.SHARED_LIST["regular"]))
+                        sim.SHARED_LIST["quarantine"][peer] = sim.SHARED_LIST["quarantine"][peer] + (1/(len(sim.SHARED_LIST["regular"]) + being_testing))
                     else:
-                        sim.SHARED_LIST["quarantine"][peer] = 1/len(sim.SHARED_LIST["regular"])
+                        sim.SHARED_LIST["quarantine"][peer] = 1/(len(sim.SHARED_LIST["regular"]) + being_testing)
                 print(self.id, "Discover?")
+                self.discover = True
                 sim.SHARED_LIST["regular"][:] = []
         else:
             self.recv_counter = 0
