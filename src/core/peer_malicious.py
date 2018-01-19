@@ -55,7 +55,8 @@ class Peer_Malicious(Peer_STRPEDS):
     def selection_second_method(self):
         target = None
         malicious_list = sim.SHARED_LIST["malicious"]
-        extra_attacks = len(set(self.peer_list) & set(sim.SHARED_LIST["regular"]))
+        self.local_regular = sim.SHARED_LIST["regular"][:]
+        extra_attacks = len(set(self.peer_list) & set(self.local_regular))
         if (self.attacked_count + extra_attacks) < (int(len(self.peer_list)*1) - len(malicious_list)):
             attacked_list = sim.SHARED_LIST["attacked"]
             quarantine_list = sim.SHARED_LIST["quarantine"].keys()
@@ -91,14 +92,17 @@ class Peer_Malicious(Peer_STRPEDS):
             if self.recv_counter > (len(self.peer_list)*2) and not self.discover:  # it is out
 
                 being_testing = 1 if self.main_target is not None else 0
-                for peer in sim.SHARED_LIST["regular"]:
-                        sim.SHARED_LIST["quarantine"][peer] = sim.SHARED_LIST["quarantine"].get(peer, 0) + (1/(len(sim.SHARED_LIST["regular"]) + being_testing))
+                for peer in self.local_regular:
+                        sim.SHARED_LIST["quarantine"][peer] = sim.SHARED_LIST["quarantine"].get(peer, 0) + (1/(len(self.local_regular) + being_testing))
 
                 if self.main_target is not None:
-                    sim.SHARED_LIST["quarantine"][self.main_target] = sim.SHARED_LIST["quarantine"].get(self.main_target, 0) + (1/(len(sim.SHARED_LIST["regular"]) + being_testing))
+                    sim.SHARED_LIST["quarantine"][self.main_target] = sim.SHARED_LIST["quarantine"].get(self.main_target, 0) + (1/(len(self.local_regular) + being_testing))
 
                 print(self.id, "Discover?")
+                print(self.id, "Regular list status:", sim.SHARED_LIST["regular"][:])
+                print(self.id, "Local regular list status:", self.local_regular[:])
                 self.discover = True
+                self.local_regular[:] = []
                 sim.SHARED_LIST["regular"][:] = []
         else:
             self.recv_counter = 0
