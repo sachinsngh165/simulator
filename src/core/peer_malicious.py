@@ -31,8 +31,8 @@ class Peer_Malicious(Peer_STRPEDS):
         self.main_target = self.choose_main_target()
 
     def choose_main_target(self):
-        #return self.selection_first_method()
-        return self.selection_second_method()
+        return self.selection_first_method()
+        #return self.selection_second_method()
 
     def selection_first_method(self):
         target = None
@@ -85,6 +85,7 @@ class Peer_Malicious(Peer_STRPEDS):
     def get_poisoned_chunk(self, chunk):
         return (chunk[0], "B", chunk[2])
 
+    '''
     def process_message(self, message, sender):
         if sender != self.splitter:
             self.recv_counter += 1
@@ -108,7 +109,8 @@ class Peer_Malicious(Peer_STRPEDS):
             self.recv_counter = 0
             
         return Peer_STRPEDS.process_message(self, message, sender)
-
+    '''
+    
     def send_chunk(self, peer):
         poisoned_chunk = self.get_poisoned_chunk(self.receive_and_feed_previous)
         

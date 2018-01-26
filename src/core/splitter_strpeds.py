@@ -18,7 +18,8 @@ class Splitter_STRPEDS(Splitter_DBS):
         self.bad_peers = []
         self.trusted_peers_discovered = []
         self.complaints = {}
-        self.p_mpl = 0.5
+        self.p_mpl = 1
+        self.treshold_attack = 0.1
         self.p_tpl = 0
 
         # --- Only for simulation purposes ---
@@ -101,15 +102,16 @@ class Splitter_STRPEDS(Splitter_DBS):
         #self.punish_TPs()
 
     def punish_peers(self):
-        for b in self.bad_peers:
-            r = random.randint(0, 1)
-            if r <= self.p_mpl:
-                #--- Only for simulation purposes ---
-                if b in self.peer_list:
-                    self.number_of_malicious -= 1
-                #------------------------------------
-                self.punish_peer(b, "by trusted")
-                self.bad_peers.remove(b)
+        if (len(self.bad_peers)/len(self.peer_list)) > self.treshold_attack:
+            for b in self.bad_peers:
+                r = random.randint(0, 1)
+                if r <= self.p_mpl:
+                    #--- Only for simulation purposes ---
+                    if b in self.peer_list:
+                        self.number_of_malicious -= 1
+                        #------------------------------------
+                    self.punish_peer(b, "by trusted")
+                    self.bad_peers.remove(b)
 
     def punish_TPs(self):
         for tp in self.trusted_peers_discovered:

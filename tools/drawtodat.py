@@ -25,7 +25,7 @@ def main(argv):
     team_log_file = open(filename+".team", "w", 1)
     buffer_log_file = open(filename+".buffer", "w", 1)
 
-    team_log_file.write("Round\tTPs\tWIPs\tMPs\tUD-TPs")
+    team_log_file.write("Round\tTPs\tWIPs\tMPs\tNA-TPs")
     buffer_log_file.write("Round\tCLR")
 
     clr = 0
