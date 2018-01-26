@@ -102,6 +102,8 @@ class Splitter_STRPEDS(Splitter_DBS):
         #self.punish_TPs()
 
     def punish_peers(self):
+        print("PUNISHING PEERS")
+        print("Bad Peers", self.bad_peers)
         if (len(self.bad_peers)/len(self.peer_list)) > self.treshold_attack:
             for b in self.bad_peers:
                 r = random.randint(0, 1)
@@ -109,7 +111,7 @@ class Splitter_STRPEDS(Splitter_DBS):
                     #--- Only for simulation purposes ---
                     if b in self.peer_list:
                         self.number_of_malicious -= 1
-                        #------------------------------------
+                    #------------------------------------
                     self.punish_peer(b, "by trusted")
                     self.bad_peers.remove(b)
 

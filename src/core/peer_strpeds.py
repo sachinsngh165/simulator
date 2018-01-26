@@ -55,8 +55,8 @@ class Peer_STRPEDS(Peer_DBS):
     def handle_bad_peers_request(self):
         for b in self.bad_peers:
             self.team_socket.sendto("is6s", (-1, "S", b), self.splitter)
-        if __debug__:
-            print(self.id, "Bad peers sent to the Splitter", self.bad_peers)
+            if __debug__:
+                print(self.id, "Bad peer sent to the Splitter", b)
         return -1
 
     def send_chunk(self, peer):
