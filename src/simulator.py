@@ -28,8 +28,8 @@ class Simulator():
 
     P_IN = 0.8
     P_MoP = 0.2
-    P_WIP = 0.6
-    P_MP = 0.2
+    P_WIP = 0.75
+    P_MP = 0.05
 
     def __init__(self, drawing_log, set_of_rules=None, number_of_monitors=0, number_of_peers=0, number_of_rounds=0, number_of_malicious=0, gui=False):
         self.set_of_rules = set_of_rules
