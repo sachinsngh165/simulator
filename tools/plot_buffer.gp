@@ -10,6 +10,8 @@ reset
 set terminal svg size 800,600 font "Verdana{10}"
 set output 'fullness.svg'
 
+set title filename
+
 # color definitions
 set border linewidth 1.5
 set style line 1 lc rgb '#000000' lt 1 lw 2 pt 7 ps 1 # --- black for buffer

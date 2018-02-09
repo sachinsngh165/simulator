@@ -18,8 +18,8 @@ class Splitter_STRPEDS(Splitter_DBS):
         self.bad_peers = []
         self.trusted_peers_discovered = []
         self.complaints = {}
-        self.p_mpl = 0.33
-        self.treshold_attack = 0.1
+        self.p_mpl = 0.2
+        self.treshold_attack = 0
         self.p_tpl = 0
 
         # --- Only for simulation purposes ---

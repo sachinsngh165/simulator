@@ -10,6 +10,8 @@ reset
 set terminal svg size 800,600 font "Verdana{10}"
 set output 'team.svg'
 
+set title filename
+
 # color definitions
 set border linewidth 1.5
 set style line 1 lc rgb '#0060ad' lt 1 lw 1 pt 6 ps 1 # --- blue for TPs
