@@ -325,6 +325,8 @@ class Peer_DBS(sim):
                     print(self.id, ": received goodbye from", sender)
                     try:
                         self.peer_list.remove(sender)
+                        if self.peer_index != 0:
+                            self.peer_index -= 1
                         print(self.id, ":", sender, "removed from peer_list")
                     except ValueError:
                         print(self.id, ": failed to remove peer", sender, "from peer_list", self.peer_list)
