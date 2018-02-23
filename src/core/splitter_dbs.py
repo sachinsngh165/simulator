@@ -52,10 +52,9 @@ class Splitter_DBS(Simulator_stuff):
             self.chunk_number = (self.chunk_number + 1) % Common.MAX_CHUNK_NUMBER
 
 
-
     def receive_chunk(self):
         # Simulator_stuff.LOCK.acquire(True,0.1)
-        time.sleep(0.05)  # Simulates bit-rate control
+        time.sleep(0.003)  # Simulates bit-rate control
         # C->Chunk, L->Los, G->Goodbye, B->Broken, P->Peer, M->Monitor, R-> Ready
         return "C"
 
