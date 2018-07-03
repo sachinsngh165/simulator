@@ -3,11 +3,13 @@
 import time
 import fire
 import networkx as nx
+import matplotlib
+matplotlib.use('Qt5Agg')
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import numpy as np
 import logging
-
+import random
 
 class Play():
 
@@ -105,7 +107,7 @@ class Play():
         self.team_figure.canvas.blit(self.team_ax.bbox)
 
     def draw_buffer(self):
-        self.buffer_figure, self.buffer_ax = plt.subplots()
+        self.buffer_figure, self.buffer_ax = plt.subplots(figsize=(6.5, 7.5))
         self.lineIN, = self.buffer_ax.plot([1] * 2, [1] * 2, color='#000000', ls="None", label="IN", marker='o',
                                            animated=True)
         self.lineOUT, = self.buffer_ax.plot([1] * 2, [1] * 2, color='#CCCCCC', ls="None", label="OUT", marker='o',
@@ -121,6 +123,9 @@ class Play():
         self.buffer_labels = self.buffer_ax.get_xticks().tolist()
         plt.grid()
         self.buffer_figure.canvas.draw()
+        self.buffer_figure.canvas.flush_events()
+        self.lastUpdate = time.time()
+        self.avgFps = 0.0
 
     def update_buffer_round(self, number_of_round):
         self.buffer_figure.suptitle("Buffer Status " + number_of_round, size=16)
@@ -157,6 +162,13 @@ class Play():
             self.buffer_ax.draw_artist(self.lineIN)
 
         self.buffer_figure.canvas.blit(self.buffer_ax.bbox)
+        self.buffer_figure.canvas.flush_events()
+        now = time.time()
+        fps = 1.0 / (now - self.lastUpdate)
+        self.lastUpdate = now
+        self.avgFps = self.avgFps * 0.8 + fps * 0.2
+        if random.randint(1,60)==60:
+            print("Generating {} fps".format(self.avgFps))
 
     def plot_clr(self):
         self.clrs_per_round = []
